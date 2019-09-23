@@ -76,7 +76,7 @@ describe("Test Init", () => {
             + ' --env.monacopkg=' + Init.MONACO_CORE_PKG + '@' + coreVersion
             + ' --env.monacohtmlcontribpkg=' + Init.MONACO_HTML_CONTRIB_PKG + '@' + htmlContribVersion
             + ' --env.monacocsscontribpkg=' + Init.MONACO_CSS_CONTRIB_PKG + '@' + cssContribVersion
-            + ' && yarn run override-vs-loader');
+            + ' && yarn run --verbose override-vs-loader');
         // check folders have been created
         expect(fs.existsSync(examplesAssemblyFolderTmp)).toBeTruthy();
         expect(fs.existsSync(checkoutFolderTmp)).toBeTruthy();

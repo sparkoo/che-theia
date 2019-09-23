@@ -17,7 +17,7 @@
     "@theia/workspace": "^0.6.1"
   },
   "scripts": {
-    "prepare": "yarn run clean && yarn run build",
+    "prepare": "yarn run --verbose clean && yarn run --verbose build",
     "clean": "rimraf lib",
     "format": "tsfmt -r --useTsfmt ../../configs/tsfmt.json",
     "lint": "tslint -c ../../configs/tslint.json --project tsconfig.json",

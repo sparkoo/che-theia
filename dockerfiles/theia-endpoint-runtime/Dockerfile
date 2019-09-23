@@ -25,7 +25,7 @@ COPY /docker-build/theia-plugin-remote/package.json /home/workspace/packages/the
 # This is needed for some tools which use this variable and will fail with 401 Unauthorized error if it is invalid.
 # For example, vscode ripgrep downloading is an example of such case.
 RUN if [ -z $GITHUB_TOKEN ]; then unset GITHUB_TOKEN; fi && \
-    cd /home/workspace/packages/theia-remote/ && yarn install --ignore-scripts
+    cd /home/workspace/packages/theia-remote/ && yarn install --verbose --ignore-scripts
 
 # Compile
 COPY /docker-build/configs /home/workspace/configs
@@ -37,7 +37,7 @@ COPY /docker-build/theia-plugin-remote/tsconfig.json /home/workspace/packages/th
 
 COPY /etc/package.json /home/workspace
 RUN if [ -z $GITHUB_TOKEN ]; then unset GITHUB_TOKEN; fi && \
-    cd /home/workspace/ && yarn install
+    cd /home/workspace/ && yarn install --verbose
 
 FROM node:10.16-alpine
 ENV HOME=/home/theia
