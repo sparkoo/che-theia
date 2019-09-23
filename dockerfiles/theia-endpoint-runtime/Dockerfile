@@ -37,7 +37,7 @@ ADD https://${GITHUB_TOKEN}:x-oauth-basic@api.github.com/repos/eclipse/che-theia
 
 # Grab dependencies
 COPY /docker-build/theia-plugin-remote/package.json /home/workspace/packages/theia-remote/
-RUN cd /home/workspace/packages/theia-remote/ && yarn install --ignore-scripts
+RUN cd /home/workspace/packages/theia-remote/ && yarn install --verbose --ignore-scripts
 
 # Compile
 COPY /docker-build/configs /home/workspace/configs
@@ -48,7 +48,7 @@ COPY /docker-build/theia-plugin /home/workspace/packages/theia-plugin
 COPY /docker-build/theia-plugin-remote/tsconfig.json /home/workspace/packages/theia-plugin/tsconfig.json
 
 COPY /etc/package.json /home/workspace
-RUN cd /home/workspace/ && yarn install
+RUN cd /home/workspace/ && yarn install --verbose
 
 FROM node:10.16-alpine
 ENV HOME=/home/theia

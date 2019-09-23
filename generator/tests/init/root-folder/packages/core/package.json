@@ -73,7 +73,7 @@
     "src"
   ],
   "scripts": {
-    "prepare": "yarn run clean && yarn run build",
+    "prepare": "yarn run --verbose clean && yarn run --verbose build",
     "clean": "theiaext clean",
     "build": "theiaext build",
     "watch": "theiaext watch",

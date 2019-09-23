@@ -17,7 +17,7 @@
     "typescript": "2.9.2"
   },
   "scripts": {
-    "prepare": "yarn run clean && yarn run build",
+    "prepare": "yarn run --verbose clean && yarn run --verbose build",
     "clean": "rimraf lib",
     "build": "tsc",
     "watch": "tsc -w"

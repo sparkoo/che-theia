@@ -10,12 +10,12 @@
       "typescript-formatter": "7.2.2"
     },
     "scripts": {
-      "prepare": "yarn run clean && yarn run tslint && yarn run build",
+      "prepare": "yarn run --verbose clean && yarn run --verbose tslint && yarn run --verbose build",
       "tslint-fix": "tslint --fix --project packages/theia-remote",
       "tslint": "tslint --project packages/theia-remote",
       "clean": "rimraf packages/**/lib",
       "format-code": "tsfmt -r --baseDir packages/theia-remote && tsfmt -r --baseDir packages/theia-plugin-ext",
       "compile": "tsc -b packages/**",
-      "build": "yarn run format-code && yarn run compile && yarn run tslint-fix"
+      "build": "yarn run --verbose format-code && yarn run --verbose compile && yarn run --verbose tslint-fix"
     }
   }  
