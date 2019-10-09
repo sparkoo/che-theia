@@ -89,6 +89,14 @@ export interface CheTaskMain {
     $fireTaskExited(event: che.TaskExitedEvent): Promise<void>;
 }
 
+export interface CheSideCarContentReader {
+    $read(uri: string, options?: { encoding?: string }): Promise<string | undefined>;
+}
+
+export interface CheSideCarContentReaderMain {
+    $registerContentReader(scheme: string): Promise<void>;
+}
+
 export interface Variable {
     name: string,
     description: string,
@@ -371,7 +379,10 @@ export const PLUGIN_RPC_CONTEXT = {
     CHE_USER_MAIN: <ProxyIdentifier<CheUserMain>>createProxyIdentifier<CheUserMain>('CheUserMain'),
 
     CHE_PRODUCT: <ProxyIdentifier<CheProduct>>createProxyIdentifier<CheProduct>('CheProduct'),
-    CHE_PRODUCT_MAIN: <ProxyIdentifier<CheProductMain>>createProxyIdentifier<CheProductMain>('CheProductMain')
+    CHE_PRODUCT_MAIN: <ProxyIdentifier<CheProductMain>>createProxyIdentifier<CheProductMain>('CheProductMain'),
+
+    CHE_SIDERCAR_CONTENT_READER: <ProxyIdentifier<CheSideCarContentReader>>createProxyIdentifier<CheSideCarContentReader>('CheSideCarContentReader'),
+    CHE_SIDERCAR_CONTENT_READER_MAIN: <ProxyIdentifier<CheSideCarContentReaderMain>>createProxyIdentifier<CheSideCarContentReaderMain>('CheSideCarContentReaderMain'),
 };
 
 // Theia RPC protocol
@@ -554,4 +565,14 @@ export interface ProductInfo {
 
 export interface Links {
     [text: string]: string;
+}
+
+export type ContentReaderFunc = (uri: string, options?: { encoding?: string }) => Promise<string | undefined>;
+
+export const CheSideCarContentReaderRegistry = Symbol('CheSideCarContentReaderRegistry');
+
+export interface CheSideCarContentReaderRegistry {
+    register(scheme: string, f: ContentReaderFunc): void;
+    unregister(scheme: string): void;
+    get(scheme: string): ContentReaderFunc | undefined;
 }

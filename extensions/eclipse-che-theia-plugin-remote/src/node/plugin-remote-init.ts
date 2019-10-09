@@ -30,6 +30,8 @@ import { TerminalContainerAware } from './terminal-container-aware';
 import { PluginDiscovery } from './plugin-discovery';
 import { PluginReaderExtension } from './plugin-reader-extension';
 import { Deferred } from '@theia/core/lib/common/promise-util';
+import { DocumentContainerAware } from './document-container-aware';
+import { LanguagesContainerAware } from './languages-container-aware';
 
 interface CheckAliveWS extends ws {
     alive: boolean;
@@ -185,6 +187,10 @@ to pick-up automatically a free port`));
         new TerminalContainerAware().overrideTerminal((webSocketClient.rpc as any).locals.get(MAIN_RPC_CONTEXT.TERMINAL_EXT.id));
         // tslint:disable-next-line:no-any
         new TerminalContainerAware().overrideTerminalCreationOptionForDebug((webSocketClient.rpc as any).locals.get(MAIN_RPC_CONTEXT.DEBUG_EXT.id));
+        // tslint:disable-next-line:no-any
+        DocumentContainerAware.makeDocumentContainerAware((webSocketClient.rpc as any).locals.get(MAIN_RPC_CONTEXT.DOCUMENTS_EXT.id));
+        // tslint:disable-next-line:no-any
+        LanguagesContainerAware.makeLanguagesContainerAware((webSocketClient.rpc as any).locals.get(MAIN_RPC_CONTEXT.LANGUAGES_EXT.id));
 
         return webSocketClient;
     }

@@ -21,6 +21,7 @@ import { CheTaskImpl } from './che-task-impl';
 import { CheSshImpl } from './che-ssh';
 import { CheUserImpl } from './che-user';
 import { CheProductImpl } from './che-product';
+import { CheSideCarContentReaderImpl } from './che-sidecar-content-reader';
 
 export interface CheApiFactory {
     (plugin: Plugin): typeof che;
@@ -34,6 +35,7 @@ export function createAPIFactory(rpc: RPCProtocol): CheApiFactory {
     const cheTaskImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_TASK, new CheTaskImpl(rpc));
     const cheSshImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_SSH, new CheSshImpl(rpc));
     const cheUserImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_USER, new CheUserImpl(rpc));
+    rpc.set(PLUGIN_RPC_CONTEXT.CHE_SIDERCAR_CONTENT_READER, new CheSideCarContentReaderImpl(rpc));
 
     const cheProductImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_PRODUCT, new CheProductImpl(rpc));
 

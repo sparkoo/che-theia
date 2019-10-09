@@ -20,6 +20,7 @@ import { CheSshMainImpl } from './che-ssh-main';
 import { CheDevfileMainImpl } from './che-devfile-main';
 import { CheUserMainImpl } from './che-user-main';
 import { CheProductMainImpl } from './che-product-main';
+import { CheSideCarContentReaderMainImpl } from './che-sidecar-content-reader-main';
 
 @injectable()
 export class CheApiProvider implements MainPluginApiProvider {
@@ -33,6 +34,7 @@ export class CheApiProvider implements MainPluginApiProvider {
         rpc.set(PLUGIN_RPC_CONTEXT.CHE_SSH_MAIN, new CheSshMainImpl(container));
         rpc.set(PLUGIN_RPC_CONTEXT.CHE_USER_MAIN, new CheUserMainImpl(container));
         rpc.set(PLUGIN_RPC_CONTEXT.CHE_PRODUCT_MAIN, new CheProductMainImpl(container, rpc));
+        rpc.set(PLUGIN_RPC_CONTEXT.CHE_SIDERCAR_CONTENT_READER_MAIN, new CheSideCarContentReaderMainImpl(container, rpc));
     }
 
 }
