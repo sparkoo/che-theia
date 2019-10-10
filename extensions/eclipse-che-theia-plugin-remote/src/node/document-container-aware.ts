@@ -11,7 +11,7 @@
 import * as theia from '@theia/plugin';
 import { DocumentsExtImpl } from '@theia/plugin-ext/lib/plugin/documents';
 import URI from 'vscode-uri';
-import { overrideUri } from './che-content-aware-utils';
+import { overrideTheiaURI, overrideVSCodeURI } from './che-content-aware-utils';
 
 export class DocumentContainerAware {
 
@@ -24,19 +24,19 @@ export class DocumentContainerAware {
 
     overrideOpenDocument(documentExt: DocumentsExtImpl) {
         const originalOpenDocument = documentExt.openDocument.bind(documentExt);
-        const openDocument = (uri: URI) => originalOpenDocument(overrideUri(uri));
+        const openDocument = (uri: URI) => originalOpenDocument(overrideVSCodeURI(uri));
         documentExt.openDocument = openDocument;
     }
 
     overrideShowDocument(documentExt: DocumentsExtImpl) {
         const originalShowDocument = documentExt.showDocument.bind(documentExt);
-        const showDocument = (uri: URI, options?: theia.TextDocumentShowOptions) => originalShowDocument(overrideUri(uri), options);
+        const showDocument = (uri: URI, options?: theia.TextDocumentShowOptions) => originalShowDocument(overrideVSCodeURI(uri), options);
         documentExt.showDocument = showDocument;
     }
 
     overrideGetDocumentData(documentExt: DocumentsExtImpl) {
         const originalGetDocumentData = documentExt.getDocumentData.bind(documentExt);
-        const getDocumentData = (resource: theia.Uri) => originalGetDocumentData(overrideUri(resource));
+        const getDocumentData = (resource: theia.Uri) => originalGetDocumentData(overrideTheiaURI(resource));
         documentExt.getDocumentData = getDocumentData;
     }
 }

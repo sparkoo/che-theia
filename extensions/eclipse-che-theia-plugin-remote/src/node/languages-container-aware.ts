@@ -10,7 +10,7 @@
 
 import * as theia from '@theia/plugin';
 import { LanguagesExtImpl } from '@theia/plugin-ext/lib/plugin/languages';
-import { overrideUri } from './che-content-aware-utils';
+import { overrideTheiaURI } from './che-content-aware-utils';
 
 export class LanguagesContainerAware {
 
@@ -50,9 +50,9 @@ export class LanguagesContainerAware {
 
     overrideResult(reference: theia.Location | theia.DefinitionLink): void {
         if ('uri' in reference) {
-            reference.uri = overrideUri(reference.uri);
+            reference.uri = overrideTheiaURI(reference.uri);
         } else {
-            reference.targetUri = overrideUri(reference.targetUri);
+            reference.targetUri = overrideTheiaURI(reference.targetUri);
         }
     }
 }
