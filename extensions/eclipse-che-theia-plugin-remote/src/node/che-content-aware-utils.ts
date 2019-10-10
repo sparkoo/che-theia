@@ -15,7 +15,9 @@ export function overrideUri(uri: { path: string, scheme: string, with: (change: 
     const cheProjectsRoot = process.env.CHE_PROJECTS_ROOT;
     const machineName = process.env.CHE_MACHINE_NAME;
     if (!machineName || !cheProjectsRoot || !uri.path.startsWith(cheProjectsRoot)) {
-        return uri.with({ scheme: uri.scheme });
+        uri = uri.with({ scheme: uri.scheme });
     }
-    return uri.with({ scheme: `file-sidecar-${machineName}` });
+    uri = uri.with({ scheme: `file-sidecar-${machineName}` });
+    console.info(uri);
+    return uri;
 }
