@@ -16,18 +16,20 @@ const machineName = process.env.CHE_MACHINE_NAME;
 
 export function overrideVSCodeURI(uri: URI) {
     if (isSubProject(uri.path)) {
-        return uri.with({ scheme: `file-sidecar-${machineName}` });
+        uri = uri.with({ scheme: `file-sidecar-${machineName}` });
     }
+    console.info(uri);
     return uri;
 }
 
 export function overrideTheiaURI(uri: theia.Uri) {
     if (isSubProject(uri.path)) {
-        return uri.with({ scheme: `file-sidecar-${machineName}` });
+        uri = uri.with({ scheme: `file-sidecar-${machineName}` });
     }
+    console.info(uri);
     return uri;
 }
 
 function isSubProject(path: string) {
-    return !machineName && cheProjectsRoot && path.startsWith(cheProjectsRoot);
+    return machineName && cheProjectsRoot && path.startsWith(cheProjectsRoot);
 }
