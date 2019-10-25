@@ -47,7 +47,7 @@ export class CheSideCarContentReaderRegistryImpl implements CheSideCarContentRea
     }
 
     get(scheme: string): ContentReaderFunc | undefined {
-        return this.readers.get(scheme); +
+        return this.readers.get(scheme);
     }
 }
 
