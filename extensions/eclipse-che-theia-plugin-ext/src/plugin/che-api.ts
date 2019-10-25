@@ -22,6 +22,7 @@ import { CheSshImpl } from './che-ssh';
 import { CheUserImpl } from './che-user';
 import { CheProductImpl } from './che-product';
 import { CheSideCarContentReaderImpl } from './che-sidecar-content-reader';
+import { CheGithubImpl } from './che-github';
 
 export interface CheApiFactory {
     (plugin: Plugin): typeof che;
@@ -34,6 +35,7 @@ export function createAPIFactory(rpc: RPCProtocol): CheApiFactory {
     const cheVariablesImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_VARIABLES, new CheVariablesImpl(rpc));
     const cheTaskImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_TASK, new CheTaskImpl(rpc));
     const cheSshImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_SSH, new CheSshImpl(rpc));
+    const cheGithubImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_GITHUB, new CheGithubImpl(rpc));
     const cheUserImpl = rpc.set(PLUGIN_RPC_CONTEXT.CHE_USER, new CheUserImpl(rpc));
     rpc.set(PLUGIN_RPC_CONTEXT.CHE_SIDERCAR_CONTENT_READER, new CheSideCarContentReaderImpl(rpc));
 
@@ -103,6 +105,12 @@ export function createAPIFactory(rpc: RPCProtocol): CheApiFactory {
             }
         };
 
+        const github: typeof che.github = {
+            uploadPublicSshKey(publicKey: string): Promise<void> {
+                return cheGithubImpl.uploadPublicSshKey(publicKey);
+            }
+        };
+
         const ssh: typeof che.ssh = {
             deleteKey(service: string, name: string): Promise<void> {
                 return cheSshImpl.delete(service, name);
@@ -147,16 +155,19 @@ export function createAPIFactory(rpc: RPCProtocol): CheApiFactory {
         };
 
         const product: typeof che.product = {
+            get icon(): string {
+                return cheProductImpl.getIcon();
+            },
+            get logo(): string | che.Logo {
+                return cheProductImpl.getLogo();
+            },
             get name(): string {
                 return cheProductImpl.getName();
             },
-            get logo(): string {
-                return cheProductImpl.getLogo();
+            get welcome(): che.Welcome | undefined {
+                return cheProductImpl.getWelcome();
             },
-            get description(): string {
-                return cheProductImpl.getDescription();
-            },
-            get links(): { [text: string]: string } {
+            get links(): che.LinkMap {
                 return cheProductImpl.getLinks();
             }
         };
@@ -169,7 +180,8 @@ export function createAPIFactory(rpc: RPCProtocol): CheApiFactory {
             task,
             ssh,
             user,
-            product
+            product,
+            github
         };
     };
 
