@@ -41,6 +41,7 @@ export class LanguagesContainerAware {
                         this.overrideResult(result);
                     }
 
+                    console.log(result);
                     return result;
                 }
             });

@@ -24,19 +24,31 @@ export class DocumentContainerAware {
 
     overrideOpenDocument(documentExt: DocumentsExtImpl) {
         const originalOpenDocument = documentExt.openDocument.bind(documentExt);
-        const openDocument = (uri: URI) => originalOpenDocument(overrideUri(uri));
+        const openDocument = (uri: URI) => {
+            const newUri = overrideUri(uri);
+            console.log(newUri);
+            return originalOpenDocument(newUri);
+        };
         documentExt.openDocument = openDocument;
     }
 
     overrideShowDocument(documentExt: DocumentsExtImpl) {
         const originalShowDocument = documentExt.showDocument.bind(documentExt);
-        const showDocument = (uri: URI, options?: theia.TextDocumentShowOptions) => originalShowDocument(overrideUri(uri), options);
+        const showDocument = (uri: URI, options?: theia.TextDocumentShowOptions) => {
+            const newUri = overrideUri(uri);
+            console.log(newUri);
+            return originalShowDocument(newUri, options);
+        };
         documentExt.showDocument = showDocument;
     }
 
     overrideGetDocumentData(documentExt: DocumentsExtImpl) {
         const originalGetDocumentData = documentExt.getDocumentData.bind(documentExt);
-        const getDocumentData = (resource: theia.Uri) => originalGetDocumentData(overrideUri(resource));
+        const getDocumentData = (resource: theia.Uri) => {
+            const newUri = overrideUri(resource);
+            console.log(newUri);
+            return originalGetDocumentData(newUri);
+        };
         documentExt.getDocumentData = getDocumentData;
     }
 }

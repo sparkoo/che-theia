@@ -23,11 +23,13 @@ export class CheSideCarContentReaderImpl implements CheSideCarContentReader {
     }
 
     async $read(uri: string, options?: { encoding?: string }): Promise<string | undefined> {
-        console.debug(`Request to read content remotely ${uri}`);
+        console.log(`Request to read content remotely ${uri}`);
 
         const _uri = URI.parse(uri);
         if (fs.pathExistsSync(_uri.fsPath)) {
-            return fs.readFileSync(_uri.fsPath, options).toString();
+            const content = fs.readFileSync(_uri.fsPath, options).toString();
+            console.log(`content >>>>>>>>>>>>>>>> ${content.length}`);
+            return content;
         }
     }
 }
