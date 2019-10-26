@@ -15,9 +15,12 @@ import { CheSideCarContentReader, PLUGIN_RPC_CONTEXT } from '../common/che-proto
 
 export class CheSideCarContentReaderImpl implements CheSideCarContentReader {
     constructor(rpc: RPCProtocol) {
+        console.log('>>>>>>>>>>>>>>>>>>>> CheSideCarContentReaderImpl');
         const delegate = rpc.getProxy(PLUGIN_RPC_CONTEXT.CHE_SIDERCAR_CONTENT_READER_MAIN);
         const machineName = process.env.CHE_MACHINE_NAME;
+        console.log(`>>>>>>>>>>>>>>>>>>>> ${machineName}`);
         if (machineName) {
+            console.log(`>>>>>>>>>>>>>>>>>>>> file-sidecar-${machineName}`);
             delegate.$registerContentReader(`file-sidecar-${machineName}`);
         }
     }
