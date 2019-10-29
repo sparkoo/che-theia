@@ -22,10 +22,6 @@ export class CheSideCarContentReaderMainImpl implements CheSideCarContentReaderM
     }
 
     async $registerContentReader(scheme: string): Promise<void> {
-        console.log(`>>>>>>>>>>>>> Register content reader for scheme '${scheme}'`);
-        this.registry.register(scheme, async (uri, options?: { encoding?: string }) => {
-            console.log('>>>>>>>>>>>>>>>>> Request to read content');
-            return await this.delegate.$read(uri, options);
-        });
+        this.registry.register(scheme, async (uri, options?: { encoding?: string }) => await this.delegate.$read(uri, options));
     }
 }
